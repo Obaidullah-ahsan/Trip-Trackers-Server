@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const { MongoClient, ServerApiVersion} = require("mongodb");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -33,7 +33,6 @@ async function run() {
       const cursor = touristSpotCollection.find()
       const result = await cursor.toArray()
       res.send(result)
-      
     })
 
     app.post("/touristspot", async (req, res) => {
