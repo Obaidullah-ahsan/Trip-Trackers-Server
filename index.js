@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,6 +28,13 @@ async function run() {
     const touristSpotCollection = client
       .db("touristSpotDB")
       .collection("touristSpot");
+
+    app.get("/touristspot",async(req,res)=>{
+      const cursor = touristSpotCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+      
+    })
 
     app.post("/touristspot", async (req, res) => {
       const touristSpot =req.body;
