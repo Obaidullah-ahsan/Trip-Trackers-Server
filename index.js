@@ -50,18 +50,39 @@ async function run() {
       res.send(result);
     });
 
+    app.put("/touristspot/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateTouristSpot = req.body;
+      const updateSpot = {
+        $set: {
+          image: updateTouristSpot.image,
+          touristsSpotName: updateTouristSpot.touristsSpotName,
+          countryName: updateTouristSpot.countryName,
+          location: updateTouristSpot.location,
+          description: updateTouristSpot.description,
+          averageCost: updateTouristSpot.averageCost,
+          seasonality: updateTouristSpot.seasonality,
+          traveltime: updateTouristSpot.traveltime,
+          totalVisitorsPerYear: updateTouristSpot.totalVisitorsPerYear,
+        },
+      };
+      const result = await touristSpotCollection.updateOne(filter, updateSpot);
+      res.send(result);
+    });
+
     app.post("/touristspot", async (req, res) => {
       const touristSpot = req.body;
       const result = await touristSpotCollection.insertOne(touristSpot);
       res.send(result);
     });
 
-    app.delete("/mylist/:id", async(req,res)=>{
+    app.delete("/mylist/:id", async (req, res) => {
       const id = req.params.id;
-      const query = {_id : new ObjectId(id)}
-      const result = await touristSpotCollection.deleteOne(query)
-      res.send(result)
-    })
+      const query = { _id: new ObjectId(id) };
+      const result = await touristSpotCollection.deleteOne(query);
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
