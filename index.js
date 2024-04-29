@@ -35,6 +35,13 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/mylist/:email", async (req, res) => {
+      const result = await touristSpotCollection
+        .find({ email: req.params.email })
+        .toArray();
+      res.send(result);
+    });
+
     app.get("/touristspot/:id", async (req, res) => {
       const id = req.params.id;
       console.log(id);
