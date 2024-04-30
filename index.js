@@ -30,6 +30,7 @@ async function run() {
       .collection("touristSpot");
 
     const countryCollection = client.db("touristSpotDB").collection("country");
+    const subCountryCollection = client.db("touristSpotDB").collection("subCountry");
 
     app.get("/touristspot", async (req, res) => {
       const cursor = touristSpotCollection.find();
@@ -88,6 +89,19 @@ async function run() {
 
     app.get("/country", async (req, res) => {
       const result = await countryCollection.find().toArray();
+      res.send(result)
+    });
+
+    app.get("/subCountry/:name", async (req, res) => {
+      const name = req.params.name;
+      const query = {country_Name: name}
+      const result = await subCountryCollection.find(query).toArray();
+      res.send(result)
+    });
+    app.get("/country/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await subCountryCollection.findOne(query)
       res.send(result)
     });
 
